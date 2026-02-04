@@ -18,7 +18,14 @@ print(text1[2], text2[2])
 print(text1[3], text2[3])
 """
 
+"""
 print("")
-printDealer([Carta("10", "D"), Carta("K", "P"), Carta("A", "T"), Carta("A", "T"), Carta("A", "T"), Carta("A", "T")], 15)
+printDealer([Carta("10", "D"), Carta("K", "P"), Carta("A", "T"), Carta("A", "T"), Carta("A", "T"), Carta("A", "T"), Carta("A", "T"), Carta("A", "T"), Carta("A", "T")], 15)
+printDealer([Carta("10", "D"), Carta("K", "P", "TAPADO")], 15)
+printDealer([Carta("10", "D")], 1)
+printDealer([], 1)
 print("")
+"""
+
+
 

@@ -60,13 +60,13 @@ def printDealer(cartas, puntos):
              [pcartas[0][3], pcartas[1][3], " ", "      ", "      ", "      ", "      ", "      ", "║"]]
 
     if len(pcartas) >= 3:
-        for i in range(3, len(pcartas)):
+        for i in range(3, len(pcartas) + 1):
             if i <= 7:
                 for j in range(4):
-                    linea[j][i] = pcartas[i][j]
+                    linea[j][i] = pcartas[i - 1][j]
             else:
                 for j in range(4):
-                    linea[j].append(pcartas[i][j])
+                    linea[j].append(pcartas[i - 1][j])
 
     for fila in linea:
         print("║ " + " ".join(fila))

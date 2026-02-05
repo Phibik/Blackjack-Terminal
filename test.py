@@ -1,3 +1,4 @@
+import msvcrt
 from menus import *
 from partida import *
 from records import *
@@ -25,6 +26,8 @@ printMano(1, [Carta("7", "C"), Carta("2", "D")], 19, 1520460)
 printMano(2)
 print("")
 
-
+print("Pulsa una tecla:")
+tecla = msvcrt.getch()  # captura un solo carácter
+print(f"Has pulsado: {tecla.decode()}")
 
 

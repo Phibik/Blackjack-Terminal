@@ -14,29 +14,6 @@ def printCarta(carta = Carta("0", "P", "VACIA")):
     else:
         return ["┌────┐", f"│ {simbolo} │", f"│ {palo}  │", "└────┘"]
 
-def printEvento(evento):
-    match evento:
-        case ev.REPARTIR:
-            pass
-        case ev.BARAJAR_REPARTIR:
-            pass
-        case ev.MANO1:
-            pass
-        case ev.MANO2:
-            pass
-        case ev.DEALER:
-            pass
-        case ev.VICTORIA:
-            pass
-        case ev.DERROTA:
-            pass
-        case ev.EMPATE:
-            pass
-        case ev.SPLIT:
-            pass
-        case ev.SURRENDER:
-            pass
-
 def printDealer(cartas = [], puntos = 0):
     if puntos < 10:
         puntos = str(puntos) + " "
@@ -126,17 +103,15 @@ def printMano(mano, cartas = [], puntos = 0, apuesta = 0):
     for fila in linea:
         print("║ " + " ".join(fila))
 
+def printEvento():
+    print("╠════════════════════════════════════════════════════╣")
+    print("║                                                    ║")
+    print("╚════════════════════════════════════════════════════╝")
 
-
-def printMano2(cartas = [], puntos = 0, apuesta = 0):
-    pass
-
-def printJugador(cartas1, cartas2):
-    pass
-
-def printDatos(dinero, estado1, estado2, puntuacionDealer, puntuacion1, puntuacion2):
-    pass
-
-def printTablero(dinero, estado1, estado2, puntuacionDealer, puntuacion1, puntuacion2, cartasDealer, cartas1, cartas2, evento):
+def printTablero(juego, evento):
     print("╔════════════════════════════════════════════════════╗")
-    print("║ ┌────┐ ┌────┐   ┌────┐ ┌────┐ ┌────┐ ┌────┐ ┌────┐ ║ ┌────┐ ┌────┐ ┌────┐ ┌────┐ ┌────┐ ")
+    print("║                 BLACKJACK " + juego.modo + ", 3:2                  ║")
+    printDealer(juego.cartasDealer, juego.puntuacionDealer)
+    printMano(1, juego.cartasJugador, juego.puntuacionJugador, juego.apuestaJugador)
+    printMano(2, juego.cartasSplit, juego.puntuacionSplit, juego.apuestaSplit)
+    printEvento()

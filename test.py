@@ -19,15 +19,12 @@ print(text1[2], text2[2])
 print(text1[3], text2[3])
 """
 
-
+"""
 print("")
 printDealer([Carta("10", "D"), Carta("K", "P", "TAPADA")], 15)
 printMano(1, [Carta("7", "C"), Carta("2", "D")], 19, 1520460)
 printMano(2)
 print("")
+"""
 
-print("Pulsa una tecla:")
-tecla = msvcrt.getch()  # captura un solo carácter
-print(f"Has pulsado: {tecla.decode()}")
-
-
+partida(17)

@@ -5,14 +5,14 @@ from records import records
 while True:
     menuPrincipal()
     opcion = input("Selecciona una opción: ").lower()
-    while opcion != "a" and opcion != "s" and opcion != "d" and opcion != "f" and opcion != "h":
+    while opcion != "a" and opcion != "s" and opcion != "d" and opcion != "f" and opcion != "j":
         menuPrincipalParaEstupidos()
         opcion = input("Selecciona una opción: ").lower()
 
     match opcion:
         case "a":
             partida(17)
-        case "h":
+        case "j":
             partida(21)
         case "s":
             records()

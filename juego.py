@@ -20,6 +20,9 @@ class Juego:
         self.apuestaJugador = 0
         self.apuestaSplit = 0
 
+        self.split = True
+        self.double = True
+
     def mezclar(self):
         self.baraja = Baraja()
         self.baraja.mezclar()
@@ -50,7 +53,7 @@ class Juego:
         nAses = 0
         for c in cartas:
             puntos += c.valor
-            if c.simbolo == "A"
+            if c.simbolo == "A":
                 nAses += 1
 
         while puntos > 21:

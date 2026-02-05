@@ -103,15 +103,16 @@ def printMano(mano, cartas = [], puntos = 0, apuesta = 0):
     for fila in linea:
         print("║ " + " ".join(fila))
 
-def printEvento():
+def printDatos():
     print("╠════════════════════════════════════════════════════╣")
     print("║                                                    ║")
     print("╚════════════════════════════════════════════════════╝")
 
-def printTablero(juego, evento):
+def printTablero(juego, evento, opciones = ""):
+    print("\n\n\n\n")
     print("╔════════════════════════════════════════════════════╗")
-    print("║                 BLACKJACK " + juego.modo + ", 3:2                  ║")
+    print("║                 BLACKJACK " + str(juego.modo) + ", 3:2                  ║")
     printDealer(juego.cartasDealer, juego.puntuacionDealer)
     printMano(1, juego.cartasJugador, juego.puntuacionJugador, juego.apuestaJugador)
     printMano(2, juego.cartasSplit, juego.puntuacionSplit, juego.apuestaSplit)
-    printEvento()
+    printDatos()

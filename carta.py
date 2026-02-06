@@ -1,3 +1,22 @@
+from enum import IntEnum
+
+class EP(IntEnum):
+    INICIO = 1
+    TURNO_JUGADOR = 2
+    TURNO_DEALER = 3
+    FIN = 4
+
+class ES(IntEnum):
+    MEZCLAR = 0
+    REPARTIR = 1
+    MANO_1 = 2
+    MANO_2 = 3
+    DEALER = 4
+    BLACKJACK = 5
+    VICTORIA = 6
+    DERROTA = 7
+    EMPATE = 8
+
 class Carta:
 
     def __init__(self, v = "0", p = "x", t = "MOSTRADA"):

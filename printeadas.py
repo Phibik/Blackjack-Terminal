@@ -72,7 +72,7 @@ def printMano(mano, cartas = [], puntos = 0, apuesta = 0):
         apuesta = str(apuesta)
     
     if mano == 1:
-        print("╠════════════════════════════════════════════════════╣")
+        print("╟────────────────────────────────────────────────────╢")
     else:
         print("║                                                    ║")
     print("║ Mano " + str(mano) + ", Puntuación: " + str(puntos) + ", Apuesta: " + apuesta + espacioExtra + "          ║")
@@ -103,10 +103,119 @@ def printMano(mano, cartas = [], puntos = 0, apuesta = 0):
     for fila in linea:
         print("║ " + " ".join(fila))
 
-def printDatos():
+def printDatos(evento, opciones, dinero, marcador, victorias, derrotas):
+
     print("╠════════════════════════════════════════════════════╣")
-    print("║                                                    ║")
-    print("╚════════════════════════════════════════════════════╝")
+
+    match evento:
+        case ES.MEZCLAR:
+            print("║         Mezclando y repartiendo la baraja          ║")
+
+        case ES.REPARTIR:
+            print("║               Repartiendo la baraja                ║")
+
+        case ES.MANO_1:
+            print("║                 Tu turno (mano 1)                  ║")
+
+        case ES.MANO_2:
+            print("║                 Tu turno (mano 2)                  ║")
+
+        case ES.DEALER:
+            print("║                  Turno del Dealer                  ║")
+
+        case ES.BLACKJACK:
+            print("║                     Blackjack!                     ║")
+
+        case ES.VICTORIA:
+            print("║                      Victoria                      ║")
+
+        case ES.DERROTA:
+            print("║                      Derrota                       ║")
+
+        case ES.EMPATE:
+            print("║                       Empate                       ║")
+
+        case _:
+            print("║                                                    ║")
+
+    print("╟──────────────────────────────┬─────────────────────╢")
+    
+    lineaDinero = "Dinero: "
+    lineaMarcador = "Marcador:   "
+    lineaVictorias = "Victorias:    "
+
+    nVictorias = 0
+    if victorias + derrotas != 0:
+        nVictorias = round(victorias / (victorias + derrotas) * 100)
+
+    if nVictorias == 100:
+        lineaVictorias += str(nVictorias)
+    elif nVictorias < 10:
+        lineaVictorias += "  " + str(nVictorias)
+    else:
+        lineaVictorias += " " + str(nVictorias)
+
+    marcadorStr = str(marcador)
+    if abs(marcador) >= 1000:
+        pass
+    elif abs(marcador) >= 100:
+        lineaMarcador += " "
+    elif abs(marcador) >= 10:
+        lineaMarcador += "  "
+    else:
+        lineaMarcador += "   "
+
+    if marcador < 0:
+        lineaMarcador += marcadorStr
+    else:
+        lineaMarcador += " " + marcadorStr
+
+    if dinero >= 100_000_000:
+        pass
+    elif dinero >= 10_000_000:
+        lineaDinero += " "
+    elif dinero >= 1_000_000:
+        lineaDinero += "  "
+    elif dinero >= 100_000:
+        lineaDinero += "   "
+    elif dinero >= 10_000:
+        lineaDinero += "    "
+    elif dinero >= 1_000:
+        lineaDinero += "     "
+    elif dinero >= 100:
+        lineaDinero += "      "
+    elif dinero >= 10:
+        lineaDinero += "       "
+    else:
+        lineaDinero += "        "
+
+    lineaDinero += str(dinero)
+
+    if opciones == "apuesta":
+        print(f"║                              │  {lineaDinero}€ ║")
+        print(f"║  Escribe tu apuesta (sin €)  │  {lineaMarcador}  ║")
+        print(f"║                              │  {lineaVictorias}% ║")
+
+    elif opciones == "":
+        print(f"║                              │  {lineaDinero}€ ║")
+        print(f"║  ( ) Continuar   (q) Salir   │  {lineaMarcador}  ║")
+        print(f"║                              │  {lineaVictorias}% ║")
+
+    else:
+        lineaDouble = ""
+        lineaSplit = ""
+
+        if "f" in opciones: lineaDouble = "(f) Double"
+        else: lineaDouble = "          "
+
+        if "d" in opciones: lineaSplit = "(d) Split "
+        else: lineaSplit = "          "
+
+        print(f"║  (j) Hit         {lineaDouble}  │  {lineaDinero}€ ║")
+        print(f"║  (k) Stand       {lineaSplit}  │  {lineaMarcador}  ║")
+        print(f"║  (a) Surrender   (q) Salir   │  {lineaVictorias}% ║")
+
+    print("╚══════════════════════════════╧═════════════════════╝")
 
 def printTablero(juego, evento, opciones = ""):
     print("\n\n\n\n")
@@ -115,4 +224,4 @@ def printTablero(juego, evento, opciones = ""):
     printDealer(juego.cartasDealer, juego.puntuacionDealer)
     printMano(1, juego.cartasJugador, juego.puntuacionJugador, juego.apuestaJugador)
     printMano(2, juego.cartasSplit, juego.puntuacionSplit, juego.apuestaSplit)
-    printDatos()
+    printDatos(evento, opciones, juego.dinero, juego.marcador, juego.victorias, juego.derrotas)

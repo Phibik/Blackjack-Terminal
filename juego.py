@@ -6,7 +6,9 @@ class Juego:
         self.modo = modo
         self.baraja = Baraja()
         self.baraja.mezclar()
-        self.nTurnos = 4
+        self.victorias = 0
+        self.derrotas = 0
+        self.marcador = 0
 
         self.cartasDealer = []
         self.cartasJugador = []
@@ -20,6 +22,7 @@ class Juego:
         self.apuestaJugador = 0
         self.apuestaSplit = 0
 
+        self.haySplit = False
         self.split = True
         self.double = True
 
@@ -32,6 +35,8 @@ class Juego:
         self.repartirDealer()
         self.repartirJugador()
         self.repartirDealer()
+        self.cartasDealer[1].tipo = "TAPADA"
+        self.puntuacionDealer = self.calcularPuntuacion(self.cartasDealer)
 
     def repartirDealer(self):
         nuevaCarta = self.baraja.robar()
@@ -52,9 +57,10 @@ class Juego:
         puntos = 0
         nAses = 0
         for c in cartas:
-            puntos += c.valor
-            if c.simbolo == "A":
-                nAses += 1
+            if c.tipo == "MOSTRADA":
+                puntos += c.valor
+                if c.simbolo == "A":
+                    nAses += 1
 
         while puntos > 21:
             if nAses == 0:

@@ -5,7 +5,6 @@ class Juego:
     def __init__(self, modo):
         self.modo = modo
         self.baraja = Baraja()
-        self.baraja.mezclar()
         self.victorias = 0
         self.derrotas = 0
         self.marcador = 0

@@ -206,7 +206,7 @@ def printDatos(evento, opciones, dinero, marcador, victorias, derrotas, nCartas)
 
     elif opciones == "":
         print(f"║                              │  {lineaDinero}€ ║")
-        print(f"║  ( ) Continuar   (q) Salir   │  {lineaMarcador}  ║")
+        print(f"║  (j) Continuar   (q) Salir   │  {lineaMarcador}  ║")
         print(f"║                              │  {lineaVictorias}% ║")
 
     else:
@@ -225,7 +225,7 @@ def printDatos(evento, opciones, dinero, marcador, victorias, derrotas, nCartas)
 
     print("╚══════════════════════════════╧═════════════════════╝")
 
-def printTablero(juego, evento, opciones = ""):
+def printTablero(juego, evento = "", opciones = ""):
     print("\n\n\n\n")
     print("╔════════════════════════════════════════════════════╗")
     print("║                 BLACKJACK " + str(juego.modo) + ", 3:2                  ║")

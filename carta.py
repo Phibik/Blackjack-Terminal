@@ -16,6 +16,7 @@ class ES(IntEnum):
     VICTORIA = 6
     DERROTA = 7
     EMPATE = 8
+    SPLIT = 9
 
 class Carta:
 

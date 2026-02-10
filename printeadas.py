@@ -103,7 +103,7 @@ def printMano(mano, cartas = [], puntos = 0, apuesta = 0):
     for fila in linea:
         print("║ " + " ".join(fila))
 
-def printDatos(evento, opciones, dinero, marcador, victorias, derrotas):
+def printDatos(evento, opciones, dinero, marcador, victorias, derrotas, nCartas):
 
     print("╠════════════════════════════════════════════════════╣")
 
@@ -112,7 +112,15 @@ def printDatos(evento, opciones, dinero, marcador, victorias, derrotas):
             print("║         Mezclando y repartiendo la baraja          ║")
 
         case ES.REPARTIR:
-            print("║               Repartiendo la baraja                ║")
+            porcienCartas = round(nCartas / 312 * 100)
+            lineaBaraja = "("
+
+            if porcienCartas < 10:
+                lineaBaraja += str(porcienCartas) + "%)  "
+            else:
+                lineaBaraja += str(porcienCartas) + "%) "
+
+            print("║            Repartiendo la baraja " + lineaBaraja + "            ║")
 
         case ES.MANO_1:
             print("║                 Tu turno (mano 1)                  ║")
@@ -224,4 +232,4 @@ def printTablero(juego, evento, opciones = ""):
     printDealer(juego.cartasDealer, juego.puntuacionDealer)
     printMano(1, juego.cartasJugador, juego.puntuacionJugador, juego.apuestaJugador)
     printMano(2, juego.cartasSplit, juego.puntuacionSplit, juego.apuestaSplit)
-    printDatos(evento, opciones, juego.dinero, juego.marcador, juego.victorias, juego.derrotas)
+    printDatos(evento, opciones, juego.dinero, juego.marcador, juego.victorias, juego.derrotas, len(juego.baraja.cartas))

@@ -29,12 +29,12 @@ def pedirInput(opciones = "-q"): # e.g. opciones = "-qjkf"
 
 def irMano2(juego):
     printTablero(juego, ES.MANO_2)
-    pedirInput()
+    opcion = pedirInput()
 
     juego.double = True
-    juego.repartirSplit()
+    juego.repartirSplit() ################################## si == 21 irse a dealer directamente
 
-    return ES.MANO_2
+    return opcion, ES.MANO_2
 
 def partida(modo):
     juego = Juego(modo)
@@ -53,6 +53,9 @@ def partida(modo):
                     pedirApuesta(juego)
                     juego.mezclar()
                     juego.repartir()
+
+                    juego.cartasJugador = [Carta("A", "D"), Carta("A", "D")]################## PARA TESTEAR
+                    juego.puntuacionJugador = juego.calcularPuntuacion(juego.cartasJugador)##################
                 else:
                     printTablero(juego, ES.REPARTIR, "apuesta")
                     pedirApuesta(juego)
@@ -103,19 +106,19 @@ def partida(modo):
 
                                 if juego.puntuacionJugador == 21:
                                     if juego.haySplit:
-                                        es = irMano2(juego)
+                                        opcion, es = irMano2(juego)
                                     else:
                                         ep = EP.TURNO_DEALER
                                 elif juego.puntuacionJugador > 21:
                                     if juego.haySplit:
-                                        es = irMano2(juego)
+                                        opcion, es = irMano2(juego)
                                     else:
                                         ep = EP.FIN
                                         es = ES.DERROTA
 
                             case "k": # STAND
                                 if juego.haySplit:
-                                    es = irMano2(juego)
+                                    opcion, es = irMano2(juego)
                                 else:
                                     ep = EP.TURNO_DEALER
 
@@ -128,19 +131,19 @@ def partida(modo):
 
                                 if juego.puntuacionJugador == 21:
                                     if juego.haySplit:
-                                        es = irMano2(juego)
+                                        opcion, es = irMano2(juego)
                                     else:
                                         ep = EP.TURNO_DEALER
                                 elif juego.puntuacionJugador > 21:
                                     if juego.haySplit:
-                                        es = irMano2(juego)
+                                        opcion, es = irMano2(juego)
                                     else:
                                         ep = EP.FIN
                                         es = ES.DERROTA
                                 else:
                                     # Igual que STAND
                                     if juego.haySplit:
-                                        es = irMano2(juego)
+                                        opcion, es = irMano2(juego)
                                     else:
                                         ep = EP.TURNO_DEALER
 
@@ -157,19 +160,19 @@ def partida(modo):
 
                                 # Igual que HIT en caso haySplit con intermedio
                                 printTablero(juego, ES.MANO_1)
-                                pedirInput()
+                                opcion = pedirInput()
 
                                 juego.repartirJugador()
 
-                                if juego.puntuacionJugador == 21:
-                                    es = irMano2(juego)
+                                if juego.puntuacionJugador == 21 and opcion != "q":
+                                    opcion, es = irMano2(juego)
 
                             case "a": # SURRENDER
                                 juego.dinero += int(juego.apuestaJugador / 2)
                                 juego.apuestaJugador = math.ceil(juego.apuestaJugador / 2)
 
                                 if juego.haySplit:
-                                    es = irMano2(juego)
+                                    opcion, es = irMano2(juego)
                                 else:
                                     ep = EP.FIN
                                     es = ES.DERROTA
@@ -239,13 +242,15 @@ def partida(modo):
                     es = ES.VICTORIA
                     
                     if juego.haySplit:
-                        pass ####################
+                        ep = EP.FIN
+                        es = ES.SPLIT
 
                 elif juego.modo == 17:
                     if juego.puntuacionDealer < 17:
                         pass
-                    elif juego.haySplit: # a partir de estos elif se planta y comprueba quien gana
-                        pass ##############################
+                    elif juego.haySplit:
+                        ep = EP.FIN
+                        es = ES.SPLIT
                     elif juego.puntuacionJugador > juego.puntuacionDealer:
                         ep = EP.FIN
                         es = ES.VICTORIA
@@ -256,10 +261,57 @@ def partida(modo):
                         ep = EP.FIN
                         es = ES.EMPATE
 
-                else:
-                    pass # hasta que supere jugador, da igual los puntos, si hay empate dealer hace stand
+                else: # juego.modo = 21
+                    if juego.haySplit:
+                        if (juego.puntuacionDealer == juego.puntuacionJugador or juego.puntuacionDealer == juego.puntuacionSplit) and juego.puntuacionDealer >= 17:
+                            ep = EP.FIN
+                            es = ES.SPLIT
+                        elif juego.puntuacionDealer > juego.puntuacionJugador or juego.puntuacionDealer > juego.puntuacionSplit:
+                            ep = EP.FIN
+                            es = ES.SPLIT
+                        else:
+                            pass
+
+                    elif juego.puntuacionDealer < juego.puntuacionJugador:
+                        pass
+                    elif juego.puntuacionDealer > juego.puntuacionJugador:
+                        ep = EP.FIN
+                        es = ES.DERROTA
+                    else:
+                        ep = EP.FIN
+                        es = ES.EMPATE
 
             case EP.FIN:
+                ganancias = 0
+
+                if juego.puntuacionDealer < juego.puntuacionJugador: ############# FALTA COMPROBAR >= 21 y muchos casos, quizas no hacer ganacias e ir caso por caso
+                    ganancias += juego.apuestaJugador * 2
+                elif juego.puntuacionDealer == juego.puntuacionJugador:
+                    ganancias += juego.apuestaJugador
+
+                if es == ES.SPLIT:
+                    suma = 0
+
+                    if juego.puntuacionDealer < juego.puntuacionJugador:
+                        suma += juego.apuestaJugador
+                    elif juego.puntuacionDealer > juego.puntuacionJugador:
+                        suma -= juego.apuestaJugador
+
+                    if juego.puntuacionDealer < juego.puntuacionSplit:
+                        suma += juego.apuestaSplit
+                        ganancias += juego.apuestaSplit * 2
+                    elif juego.puntuacionDealer > juego.puntuacionSplit:
+                        suma -= juego.apuestaSplit
+                    else:
+                        ganancias += juego.apuestaSplit
+
+                    if suma > 0:
+                        es = ES.VICTORIA
+                    elif suma < 0:
+                        es = ES.DERROTA
+                    else:
+                        es = ES.EMPATE
+
                 match es:################################ FALTA ARREGLAR APUESTAS, COMO SUMAN DINERO, POR EL SPLIT
                     case ES.BLACKJACK:
                         juego.cartasDealer[1].tipo = "MOSTRADA"
@@ -271,7 +323,7 @@ def partida(modo):
                         opcion = pedirInput() 
 
                     case ES.VICTORIA:
-                        juego.dinero += (juego.apuestaJugador + juego.apuestaSplit) * 2
+                        juego.dinero += ganancias
                         juego.victorias += 1
                         juego.marcador += 1
 
@@ -279,7 +331,7 @@ def partida(modo):
                         opcion = pedirInput()
 
                     case ES.EMPATE:
-                        juego.dinero += juego.apuestaJugador + juego.apuestaSplit
+                        juego.dinero += ganancias
 
                         printTablero(juego, es)
                         opcion = pedirInput()
@@ -287,16 +339,13 @@ def partida(modo):
                     case ES.DERROTA:
                         juego.cartasDealer[1].tipo = "MOSTRADA"
                         juego.puntuacionDealer = juego.calcularPuntuacion(juego.cartasDealer)
+                        juego.dinero += ganancias
                         juego.derrotas += 1
                         juego.marcador -= 1
 
                         printTablero(juego, es)
                         opcion = pedirInput() 
                         if juego.dinero == 0: opcion = "q"
-
-                    case ES.SPLIT:
-                        # evaluar victoria/derrota y mandar a otro es
-                        pass
 
                 # reiniciar todas variables
                 juego.cartasDealer = []

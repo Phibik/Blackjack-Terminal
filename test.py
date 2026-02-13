@@ -26,4 +26,5 @@ printMano(1, [Carta("7", "C"), Carta("2", "D")], 19, 1520460)
 printMano(2)
 print("")
 """
+
 partida(17)

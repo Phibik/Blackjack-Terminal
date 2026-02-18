@@ -25,6 +25,7 @@ def menuPrincipalParaEstupidos():
     print('\n')
     print("(a) Blackjack 17, 3:2")
     print("(j) Blackjack 21, 3:2")
+    print("(k) Blackjack 99, 1:1")
     print("(s) Récords")
     print("(d) Reglas")
     print("(f) Salir")

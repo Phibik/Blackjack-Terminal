@@ -35,7 +35,7 @@ def irMano2(juego):
     juego.repartirSplit()
 
     if juego.puntuacionSplit == 21:
-        return opcion, ES.MANO_2, EP.DEALER
+        return opcion, ES.MANO_2, EP.TURNO_DEALER
     else:
         return opcion, ES.MANO_2, EP.TURNO_JUGADOR
 

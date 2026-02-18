@@ -2,22 +2,32 @@ from menus import *
 from partida import partida
 from records import records
 
-while True:
+"""
+TAREAS:
+    - Arreglar menus (más bonitos)
+    - Hacer puntuacion en un .txt
+    - Hacer modo 99 (dealer hace mejor jugada estadisticamente)
+    - Arreglar codigo (hacerlo bonito, clase mano y más funciones en partida.py)
+"""
+
+opcion = ""
+while opcion != "q":
+
     menuPrincipal()
     opcion = input("Selecciona una opción: ").lower()
-    while opcion != "a" and opcion != "s" and opcion != "d" and opcion != "f" and opcion != "j":
+    while opcion != "j" and opcion != "f" and opcion != "d" and opcion != "k" and opcion != "a" and opcion != "q":
         menuPrincipalParaEstupidos()
         opcion = input("Selecciona una opción: ").lower()
 
     match opcion:
-        case "a":
-            partida(17)
         case "j":
-            partida(21)
-        case "s":
-            records()
-        case "d":
-            reglas()
+            partida(17)
         case "f":
-            break
+            partida(21)
+        case "d":
+            partida(99)
+        case "k":
+            records()
+        case "a":
+            reglas()
 

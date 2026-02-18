@@ -212,6 +212,7 @@ def printDatos(evento, opciones, dinero, marcador, victorias, derrotas, nCartas)
     else:
         lineaDouble = ""
         lineaSplit = ""
+        lineaSurrender = ""
 
         if "f" in opciones: lineaDouble = "(f) Double"
         else: lineaDouble = "          "
@@ -219,9 +220,17 @@ def printDatos(evento, opciones, dinero, marcador, victorias, derrotas, nCartas)
         if "d" in opciones: lineaSplit = "(d) Split "
         else: lineaSplit = "          "
 
+        if "a" in opciones: lineaSurrender = "(a) Surrender"
+        else: lineaSurrender = "             "
+        """
         print(f"║  (j) Hit         {lineaDouble}  │  {lineaDinero}€ ║")
         print(f"║  (k) Stand       {lineaSplit}  │  {lineaMarcador}  ║")
-        print(f"║  (a) Surrender   (q) Salir   │  {lineaVictorias}% ║") ######################################## FALTA QUITAR SURRENDER TRAS PRIMERA JUGADA, LOGICA SIMILAR AL SPLIT
+        print(f"║  {lineaSurrender}   (q) Salir   │  {lineaVictorias}% ║")
+        """
+
+        print(f"║  (j) Hit      {lineaDouble}     │  {lineaDinero}€ ║")
+        print(f"║  (k) Stand    {lineaSplit}     │  {lineaMarcador}  ║")
+        print(f"║  (q) Salir    {lineaSurrender}  │  {lineaVictorias}% ║")
 
     print("╚══════════════════════════════╧═════════════════════╝")
 
@@ -233,4 +242,3 @@ def printTablero(juego, evento = "", opciones = ""):
     printMano(1, juego.cartasJugador, juego.puntuacionJugador, juego.apuestaJugador)
     printMano(2, juego.cartasSplit, juego.puntuacionSplit, juego.apuestaSplit)
     printDatos(evento, opciones, juego.dinero, juego.marcador, juego.victorias, juego.derrotas, len(juego.baraja.cartas))
-
